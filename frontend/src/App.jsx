@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Pages/Layouts/Layout";
 import { Home } from "./Pages";
 import DashboardLayout from "./Pages/Layouts/DashboardLayout";
-import { Dashboard, AuthLogin, CreateCategory, Category } from "./Pages/Dashboard";
+import { Dashboard, AuthLogin, CreateCategory, Category, EditCategory } from "./Pages/Dashboard";
 import ProtectAdminPage from "./Pages/Dashboard/ProtectAdminPage";
 
 function App() {
@@ -38,6 +38,14 @@ function App() {
             element={
               <ProtectAdminPage>
                 <CreateCategory />
+              </ProtectAdminPage>
+            }
+          />
+          <Route
+            path="/dashboard/category/edit/:id"
+            element={
+              <ProtectAdminPage>
+                <EditCategory />
               </ProtectAdminPage>
             }
           />

@@ -1,46 +1,66 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import TextInput from "../../../Components/TextInput";
-import { useForm } from "react-hook-form";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
-import { mergeError } from "../../../helper/formHelper.js";
+import { Link } from "react-router-dom";
+import TextInput from "../../../Components/TextInput";
+import { mergeError } from "../../../helper/formHelper";
 
-const Create = () => {
+const Edit = () => {
+  const params = useParams();
+  const { id } = params;
+
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors},
+    setValue,
     setError, //use to set server side error
   } = useForm();
+
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/create`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await axios.put(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/update/${id}`,
+        data
       );
-      toast.success(response.data?.message);
-      navigate('/dashboard/category')
+      toast.success(response.data?.message || "Category updated successfully");
+
+      navigate("/dashboard/category");
     } catch (error) {
       if (error.response.data.validateErrors) {
         mergeError(error.response.data?.validateErrors, setError);
       }
-      toast.error(error.response.data?.message|| 'Category Creation Failed.');
+      toast.error(error.response.data?.message || "Failed to update Category.");
     }
   };
+
+  useEffect(() => {
+    const fetchCategory = async (id) => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/${id}`
+        );
+        const name = response.data.category.name;
+        setValue("name", name);
+      } catch (error) {
+        toast.error(
+          error.response.data?.message || "Failed to fetch Category."
+        );
+      }
+    };
+
+    fetchCategory(id);
+  }, [id, setValue]);
 
   return (
     <div className="card w-full mt-5 bg-base-100 card-xl shadow-sm">
       <div className="card-body">
         <div className="grid grid-cols-2 gap-6">
           <div>
-            <h2 className="card-title">Category Create</h2>
+            <h2 className="card-title">Category Edit</h2>
           </div>
           <div className="text-end">
             <Link to={"/dashboard/category"} className="btn btn-warning">
@@ -64,8 +84,11 @@ const Create = () => {
               )}
             </div>
             <div className="mb-3">
-              <button className="btn btn-primary " type="submit">
-                Create
+              <button
+                className="btn btn-primary"
+                type="submit"
+              >
+                Update
               </button>
             </div>
           </form>
@@ -75,4 +98,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Edit;
