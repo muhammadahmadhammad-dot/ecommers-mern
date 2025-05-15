@@ -13,8 +13,8 @@ const login = async (data) => {
       }
     );
     
-    window.localStorage.setItem("auth", JSON.stringify(response.data.user));
-    window.localStorage.setItem("token", response.data?.token);
+    window.localStorage.setItem("user", JSON.stringify(response.data.user));
+    window.localStorage.setItem("token", JSON.stringify(response.data.token));
     return response.data;
   } catch (error) {
     return error.response.data;

@@ -1,7 +1,6 @@
 import React from "react";
 import TextInput from "../../../Components/TextInput";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { mergeError } from "../../../helper/formHelper.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";

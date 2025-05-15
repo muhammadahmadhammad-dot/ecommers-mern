@@ -11,8 +11,8 @@ export const login = createAsyncThunk('auth/login', async(data, thunkAPI )=>{
 })
 
 const initialState = {
-  user: window.localStorage.getItem("user") || '',
-  token: window.localStorage.getItem("token") || '',
+  user: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : '',
+  token: window.localStorage.getItem("token") ? JSON.parse(window.localStorage.getItem("token")) : '',
   status: '',
   error: null,
 };
