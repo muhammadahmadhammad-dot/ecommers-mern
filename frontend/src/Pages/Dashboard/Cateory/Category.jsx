@@ -7,21 +7,32 @@ const Category = () => {
   const [categories, setCategories] = useState([]);
 
   const fetchCategories = async () => {
+    const token = window.localStorage.getItem('token')
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/categories`
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/categories`,{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
       );
+      console.log(response)
       setCategories(response.data.categories || []);
     } catch (error) {
       toast.error(
-        error.response.data?.message || "Failed to fetch Categories."
+        error.response?.data?.message || "Failed to fetch Categories."
       );
     }
   };
   const deleteCategory = async (id) => {
+    const token = window.localStorage.getItem('token')
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/delete/${id}`
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/delete/${id}`,{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
       );
       setCategories((prev) => prev.filter((item) => item._id !== id));
       toast.success(response.data?.message || "Category deleted Successfully.");

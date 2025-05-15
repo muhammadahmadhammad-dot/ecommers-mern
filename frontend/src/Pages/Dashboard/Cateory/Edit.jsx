@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import  { useEffect  } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -21,10 +21,16 @@ const Edit = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+     const token = window.localStorage.getItem('token')
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/update/${id}`,
-        data
+        data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:`Bearer ${token}`
+          },
+        }
       );
       toast.success(response.data?.message || "Category updated successfully");
 
@@ -39,9 +45,14 @@ const Edit = () => {
 
   useEffect(() => {
     const fetchCategory = async (id) => {
+       const token = window.localStorage.getItem('token')
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/${id}`
+          `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/${id}`, {
+          headers: {
+            Authorization:`Bearer ${token}`
+          },
+        }
         );
         const name = response.data.category.name;
         setValue("name", name);

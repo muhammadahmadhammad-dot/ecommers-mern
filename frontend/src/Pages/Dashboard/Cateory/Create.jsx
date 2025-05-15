@@ -15,6 +15,7 @@ const Create = () => {
     setError, //use to set server side error
   } = useForm();
   const onSubmit = async (data) => {
+     const token = window.localStorage.getItem('token')
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/create`,
@@ -22,6 +23,7 @@ const Create = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization:`Bearer ${token}`
           },
         }
       );
