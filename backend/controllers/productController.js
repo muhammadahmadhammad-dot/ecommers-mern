@@ -1,5 +1,5 @@
-import productModel from "../models/productModel";
-import { productSchema } from "../validations/productValidation";
+import productModel from "../models/productModel.js";
+import { productSchema } from "../validations/productValidation.js";
 import { uploadImageCloudanary } from "../helper/cloudinaryHelper.js";
 
 export const getAllActive = async (req, res) => {
