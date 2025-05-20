@@ -2,6 +2,18 @@ import productModel from "../models/productModel.js";
 import { productSchema } from "../validations/productValidation.js";
 import { uploadImageCloudanary } from "../helper/cloudinaryHelper.js";
 
+export const getActive = async (req, res) => {
+   try {
+    const {slug} = req.params
+    const product = await productModel.findOne({ slug:slug,status: true });
+    return res
+      .status(200)
+      .send({ success: true, message: "Product", product });
+  } catch (error) {
+    console.log("getActive controller error : " + error);
+    return res.status(400).send({ success: false, message: `Error ${error}` });
+  }
+}
 export const getAllActive = async (req, res) => {
   try {
     const products = await productModel.find({ status: true });
@@ -37,35 +49,37 @@ export const create = async (req, res) => {
     const { title, short_description, description, price, category, status } =
       data;
 
-    const image = req.file;
-    const filePath = image.path;
+    const featureImage = req.file;
+    const filePath = featureImage.path;
     // cloudinary
     const { secure_url, public_id } = await uploadImageCloudanary(
       filePath,
-      "posts"
+      "products"
     );
     if (!secure_url) {
       return res.status(400).json({ error: secure_url });
     }
     const createdBy = req.user._id;
-    
-    const product = categoryModel.create({
+
+    const product = new productModel({
       title,
       short_description,
       description,
       price,
       category,
       featureImage: {
-        secure_url,
+        source_url: secure_url,
         public_id,
       },
       createdBy,
       status,
     });
+
+    const savedProduct = await product.save();
     return res.status(200).send({
       success: true,
       message: "Product created successfully",
-      product,
+      product: savedProduct,
     });
   } catch (error) {
     console.log("create controller error : " + error);
@@ -91,6 +105,7 @@ export const product = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const id = req.params.id;
+    
     const { data, error } = productSchema.safeParse(req.body);
     if (error) {
       return res.status(400).send({
@@ -100,23 +115,38 @@ export const updateProduct = async (req, res) => {
       });
     }
 
-    const { title, short_description, description, price, category, status } =
-      data;
-    const product = await product.findOneAndUpdate(
-      { _id: id },
-      { title, short_description, description, price, category, status },
-      { new: true }
-    );
+     const product = await productModel.findById(id);
     if (!product) {
-      return res.status(400).send({
-        success: false,
-        message: "Product Not Found!",
-      });
+      return res.status(404).send({ success: false, message: "Product not found" });
     }
+
+   
+    product.set(data);
+
+    if (req.file) {
+      const featureImage = req.file;
+      const filePath = featureImage.path;
+      // cloudinary
+      const { secure_url, public_id } = await uploadImageCloudanary(
+        filePath,
+        "products"
+      );
+      if (!secure_url) {
+        return res.status(400).json({ error: secure_url });
+      }
+
+      product.featureImage = {
+        source_url: uploadResult.secure_url,
+        public_id: uploadResult.public_id,
+      };
+    }
+    
+    const savedProduct = await product.save();
+    
     return res.status(200).send({
       success: true,
       message: "Product Updated Succesfully",
-      product,
+      product:savedProduct,
     });
   } catch (error) {
     console.log("updateProduct controller error : " + error);

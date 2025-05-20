@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Topbar = () => {
@@ -31,6 +30,12 @@ const Topbar = () => {
               <Link to={"/dashboard/category"}>Category</Link>
             </li>
             <li>
+              <Link to={"/dashboard/product"}>Product</Link>
+            </li>
+            <li>
+              <Link to={"/dashboard/order"}>Order</Link>
+            </li>
+            <li>
               <a>Parent </a>
               <ul className="p-2">
                 <li>
@@ -41,9 +46,6 @@ const Topbar = () => {
                 </li>
               </ul>
             </li>
-            <li>
-              <a>Item 3</a>
-            </li>
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">daisyUI</a>
@@ -53,6 +55,12 @@ const Topbar = () => {
           <li>
             <Link to={"/dashboard/category"}>Category</Link>
           </li>
+          <li>
+            <Link to={"/dashboard/product"}>Product</Link>
+          </li>
+           <li>
+              <Link to={"/dashboard/order"}>Order</Link>
+            </li>
           <li>
             <details>
               <summary>Parent</summary>

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify"
 
 const Product = new mongoose.Schema(
   {
@@ -8,7 +9,7 @@ const Product = new mongoose.Schema(
     },
     slug: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
     },
     category: {
@@ -52,4 +53,14 @@ const Product = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+
+
+Product.pre('save', function(next) {
+  if (this.isModified('title')) {
+    this.slug = slugify(this.title, { lower: true, strict: true });
+  }
+  next();
+});
+
 export default mongoose.model("Product", Product)
