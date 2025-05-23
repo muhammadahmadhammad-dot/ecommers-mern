@@ -7,12 +7,16 @@ import TextInput from "../../Components/TextInput";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { mergeError } from "../../helper/formHelper.js";
+import CheckoutForm from "../../Components/CheckoutForm.jsx";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const cartItems = useSelector((state) => state.cart.items);
   const navigate = useNavigate();
+  const stripe = useStripe();
+  const elements = useElements();
   const {
     register,
     handleSubmit,
@@ -49,9 +53,30 @@ const Checkout = () => {
       );
 
       if (res.data.success == true) {
-        dispatch(clearCart());
-        toast.success("Order placed successfully!");
-        navigate("/");
+        const stripeRes = await axios.post(
+          `${
+            import.meta.env.VITE_BACKEND_BASE_URL
+          }/orders/payment/create-payment-intent`,
+          {
+            amount: totalAmount * 100, // convert to cents
+          }
+        );
+        const { clientSecret } = stripeRes.data;
+
+        const result = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        });
+        if (result.error) {
+          toast.error(result.error.message || "Payment Failed");
+        } else {
+          if (result.paymentIntent.status === "succeeded") {
+            dispatch(clearCart());
+            toast.success("Order placed successfully!");
+            navigate("/");
+          }
+        }
       }
     } catch (err) {
       console.error(err);
@@ -83,7 +108,7 @@ const Checkout = () => {
       </div>
       <div className="grid grid-cols-2 gap-6 w-11/12 mx-auto">
         <div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
               <TextInput
                 label="Name"
@@ -145,7 +170,16 @@ const Checkout = () => {
                 {loading ? "Processing..." : "Place Order"}
               </button>
             </div>
-          </form>
+          </form> */}
+          <CheckoutForm
+            CardElement={<CardElement />}
+            totalAmount={totalAmount}
+            handleSubmit={handleSubmit}
+            loading={loading}
+            onSubmit={onSubmit}
+            errors={errors}
+            register={register}
+          />
         </div>
         <div className="card-body">
           <h2 className="card-title">

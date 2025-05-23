@@ -27,12 +27,22 @@ function App() {
             path="/shop/product-detail/:slug"
             element={<SingleProduct />}
           />
-          <Route path="/buy-now-checkout" element={
-            <StripeContextProvider>
-              <BuyNowCheckout />
-            </StripeContextProvider>
-            } />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route
+            path="/buy-now-checkout"
+            element={
+              <StripeContextProvider>
+                <BuyNowCheckout />
+              </StripeContextProvider>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <StripeContextProvider>
+                <Checkout />
+              </StripeContextProvider>
+            }
+          />
           <Route path="/cart" element={<Cart />} />
         </Route>
 
