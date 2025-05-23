@@ -53,7 +53,7 @@ const BuyNowCheckout = () => {
             import.meta.env.VITE_BACKEND_BASE_URL
           }/orders/payment/create-payment-intent`,
           {
-            amount: totalAmount * 100, // convert to cents
+            amount: totalAmount * 100, // in paisa
           }
         );
 

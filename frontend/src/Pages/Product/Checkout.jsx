@@ -58,7 +58,7 @@ const Checkout = () => {
             import.meta.env.VITE_BACKEND_BASE_URL
           }/orders/payment/create-payment-intent`,
           {
-            amount: totalAmount * 100, // convert to cents
+            amount: totalAmount * 100, // in paisa
           }
         );
         const { clientSecret } = stripeRes.data;
@@ -79,7 +79,7 @@ const Checkout = () => {
         }
       }
     } catch (err) {
-      console.error(err);
+      console.log(err);
       if (err.response.data.validateErrors) {
         mergeError(err.response.data?.validateErrors, setError);
       }
