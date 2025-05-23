@@ -15,6 +15,7 @@ import {
   Order,
 } from "./Pages/Dashboard";
 import ProtectAdminPage from "./Pages/Dashboard/ProtectAdminPage";
+import StripeContextProvider from "./contexts/StripeContextProvider";
 
 function App() {
   return (
@@ -26,7 +27,11 @@ function App() {
             path="/shop/product-detail/:slug"
             element={<SingleProduct />}
           />
-          <Route path="/buy-now-checkout" element={<BuyNowCheckout />} />
+          <Route path="/buy-now-checkout" element={
+            <StripeContextProvider>
+              <BuyNowCheckout />
+            </StripeContextProvider>
+            } />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/cart" element={<Cart />} />
         </Route>
