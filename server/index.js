@@ -7,7 +7,10 @@ import cors from "cors";
 const app = express();
 
 
-app.use(cors());
+app.use(cors({
+  origin:["https://ecommers-mern-brown.vercel.app"],
+  credentials:true
+}));
 app.use(express.json()); //req.body
 
 connection(process.env.DB_URL);
