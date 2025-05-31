@@ -8,9 +8,10 @@ import cors from "cors";
 const app = express();
 
 
+
 app.use(cors({
-  origin:'*',
-  methods:['POST','GET','PUT','DELETE'],
+  origin: 'https://ecommers-mern-brown.vercel.app', 
+  methods: ['POST', 'GET', 'PUT', 'DELETE'],
 }));
 app.use(express.json()); //req.body
 
