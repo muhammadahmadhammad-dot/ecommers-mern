@@ -23,11 +23,11 @@ const AuthLogin = () => {
 
       if (response.success) {
         toast.success(response?.message || "Login Successfull.");
-        if (response?.user?.role) {
-          navigate("/dashboard");
-          return;
-        }
-        navigate("/");
+        // if (response?.user?.role) {
+        //   navigate("/dashboard");
+        //   return;
+        // }
+        navigate("/dashboard");
       } else {
         if (response.validateErrors) {
           mergeError(response?.validateErrors, setError);

@@ -10,13 +10,15 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'https://ecommers-mern-brown.vercel.app', 
-  methods: ['POST', 'GET', 'PUT', 'DELETE'],
+  origin: process.env.CLIENT_URL || 'https://ecommers-mern-brown.vercel.app', 
 }));
 app.use(express.json()); //req.body
 
 connection(process.env.DB_URL);
 
+app.get('/',(red, res)=>{
+    res.send("ok")
+})
 
 import userRouter from "../routes/userRoutes.js";
 import categoryRouter from "../routes/categoryRouter.js";
