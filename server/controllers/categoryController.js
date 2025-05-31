@@ -1,5 +1,5 @@
 import categoryModel from "../models/categoryModel.js";
-import { categorySchema } from "../validations/CategoryValidation.js";
+import { categorySchema } from "../validations/categoryValidation.js";
 
 export const updateCategory = async (req, res) => {
   try {
