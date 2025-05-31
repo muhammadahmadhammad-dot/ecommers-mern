@@ -1,5 +1,5 @@
 import { Router } from "express";
-import authMiddleware from "../middlewares/authmiddleware.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 import isAdminMiddleware from "../middlewares/isAdminMiddleware.js";
 import {getAllActive,getAll, create, product, updateProduct, deleteProduct, getActive} from "../controllers/productController.js"
 import multerMiddleware from "../middlewares/multerMiddleware.js";
