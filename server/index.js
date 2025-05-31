@@ -8,7 +8,8 @@ const app = express();
 
 
 app.use(cors({
-  origin:["https://ecommers-mern-brown.vercel.app"],
+  origin:process.env.CLIENT_URL,
+  methods:['POST','GET','PUT','DELETE'],
   credentials:true
 }));
 app.use(express.json()); //req.body
