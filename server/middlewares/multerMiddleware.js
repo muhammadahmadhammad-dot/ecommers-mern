@@ -1,14 +1,18 @@
-import multer from "multer";
-import path from "path";
-import fs from "fs";
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 
-const uploadDir = "uploads/products/";
+const uploadPath = path.resolve('uploads/products');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Ensure directory exists
-    fs.mkdirSync(uploadDir, { recursive: true });
-    cb(null, uploadDir);
+    try {
+      fs.mkdirSync(uploadPath, { recursive: true });
+      cb(null, uploadPath);
+    } catch (err) {
+      console.error('Error creating upload directory:', err);
+      cb(err, uploadPath);
+    }
   },
   filename: (req, file, cb) => {
     const uniqueName = Date.now() + path.extname(file.originalname);
