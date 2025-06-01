@@ -6,7 +6,7 @@ const Topbar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(logout())
-    navigate('/')
+    navigate('/dashboard/login')
   }
   return (
     <div className="navbar bg-base-100 shadow-sm">
