@@ -1,23 +1,9 @@
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
-
-const uploadPath = path.resolve('uploads/products');
+import multer from "multer";
+import path from "path";
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    try {
-      fs.mkdirSync(uploadPath, { recursive: true });
-      cb(null, uploadPath);
-    } catch (err) {
-      console.error('Error creating upload directory:', err);
-      cb(err, uploadPath);
-    }
-  },
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + path.extname(file.originalname);
-    cb(null, uniqueName);
-  },
+  destination: (req, file, cb) => cb(null, "uploads/products/"),
+  filename: (req, file, cb) =>
+    cb(null, Date.now() + path.extname(file.originalname)),
 });
-
 export default multer({ storage });
