@@ -22,10 +22,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      window.localStorage.removeItem("user")
-      window.localStorage.removeItem("token")
-        state.auth.user='';
-        state.auth.token='';
+      window.localStorage.removeItem("user");
+      window.localStorage.removeItem("token");
+      state.auth.user='';
+      state.auth.token='';
     },
   },
   extraReducers:(builder) => {
