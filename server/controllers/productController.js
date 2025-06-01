@@ -1,6 +1,6 @@
 import productModel from "../models/productModel.js";
 import { productSchema } from "../validations/productValidation.js";
-import { uploadImageCloudanary } from "../helper/cloudinaryHelper.js";
+import { uploadImageCloudinary } from "../helper/cloudinaryHelper.js";
 
 export const getActive = async (req, res) => {
    try {
@@ -52,7 +52,7 @@ export const create = async (req, res) => {
     // const featureImage = req.file;
     // const filePath = featureImage.path;
     // cloudinary
-    const { secure_url, public_id } = await uploadImageCloudanary(
+    const { secure_url, public_id } = await uploadImageCloudinary(
       req.file.buffer,
       "products"
     );
@@ -125,19 +125,22 @@ export const updateProduct = async (req, res) => {
 
     if (req.file) {
       const featureImage = req.file;
-      const filePath = featureImage.path;
-      // cloudinary
-      const { secure_url, public_id } = await uploadImageCloudanary(
-        filePath,
+
+      // Upload to cloudinary from memory buffer
+      const { secure_url, public_id } = await uploadImageCloudinary(
+        featureImage.buffer,
         "products"
       );
+
       if (!secure_url) {
-        return res.status(400).json({ error: secure_url });
+        return res.status(400).json({ error: "Cloudinary upload failed" });
       }
+      //  delete the old image
+      await cloudinary.uploader.destroy(product.featureImage.public_id);
 
       product.featureImage = {
-        source_url: uploadResult.secure_url,
-        public_id: uploadResult.public_id,
+        source_url: secure_url,
+        public_id: public_id,
       };
     }
     

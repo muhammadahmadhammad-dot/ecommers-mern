@@ -16,17 +16,14 @@ function bufferToStream(buffer) {
 
 export const uploadImageCloudinary = (fileBuffer, foldername) => {
   return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
+    const uploadStream = cloudinary.uploader.upload_stream(
       { folder: foldername },
-      (error, result) => {
-        if (error) return reject(error);
-        resolve({
-          secure_url: result.secure_url,
-          public_id: result.public_id,
-        });
+      (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
       }
     );
 
-    bufferToStream(fileBuffer).pipe(stream);
+    bufferToStream(fileBuffer).pipe(uploadStream);
   });
 };
