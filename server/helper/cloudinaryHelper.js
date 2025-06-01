@@ -1,23 +1,32 @@
 import { v2 as cloudinary } from "cloudinary";
-import fs from "fs";
+import { Readable } from "stream";
 
-export const uploadImageCloudanary = async (filePath, foldername) => {
-  try {
-    cloudinary.config({
-      cloud_name: process.env.CLOUD_NAME,
-      api_key: process.env.CLOUD_API_KEY,
-      api_secret: process.env.CLOUD_API_SECRET,
-    });
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
-    const result = await cloudinary.uploader.upload(filePath, {
-      folder: foldername,
-    });
-     fs.unlinkSync(filePath);
-    return {
-      secure_url: result.secure_url,
-      public_id: result.public_id,
-    };
-  } catch (error) {
-    throw new Error(error);
-  }
+function bufferToStream(buffer) {
+  const readable = new Readable();
+  readable.push(buffer);
+  readable.push(null);
+  return readable;
+}
+
+export const uploadImageCloudinary = (fileBuffer, foldername) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: foldername },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve({
+          secure_url: result.secure_url,
+          public_id: result.public_id,
+        });
+      }
+    );
+
+    bufferToStream(fileBuffer).pipe(stream);
+  });
 };

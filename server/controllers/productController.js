@@ -49,11 +49,11 @@ export const create = async (req, res) => {
     const { title, short_description, description, price, category, status } =
       data;
 
-    const featureImage = req.file;
-    const filePath = featureImage.path;
+    // const featureImage = req.file;
+    // const filePath = featureImage.path;
     // cloudinary
     const { secure_url, public_id } = await uploadImageCloudanary(
-      filePath,
+      req.file.buffer,
       "products"
     );
     if (!secure_url) {
