@@ -7,7 +7,7 @@ const ProductCard = ({ product, id }) => {
     <div className="card bg-base-100 w-96 shadow-sm" id={id}>
         <figure>
       <Link to={`/shop/product-detail/${product.slug}`} className="h-60">
-          <img src={product?.featuredImage?.source_url} alt={product.title} />
+          <img src={product?.featureImage.source_url} alt={product.title} />
       </Link>
         </figure>
         <div className="card-body">
