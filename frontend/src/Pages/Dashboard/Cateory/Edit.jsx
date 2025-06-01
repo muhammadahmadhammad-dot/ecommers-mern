@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import TextInput from "../../../Components/TextInput";
 import { mergeError } from "../../../helper/formHelper";
+import { useSelector } from "react-redux";
 
 const Edit = () => {
   const params = useParams();
   const { id } = params;
+  const token = useSelector((state)=>(state.auth.token))
 
   const navigate = useNavigate();
   const {
@@ -21,7 +23,6 @@ const Edit = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-     const token = window.localStorage.getItem('token')
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/update/${id}`,
@@ -45,7 +46,6 @@ const Edit = () => {
 
   useEffect(() => {
     const fetchCategory = async (id) => {
-       const token = window.localStorage.getItem('token')
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/${id}`, {

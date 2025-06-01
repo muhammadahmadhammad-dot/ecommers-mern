@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
+  const token = useSelector((state)=>(state.auth.token))
   const statusBadge = {
     Delivered: { text: "Delivered", class: "badge badge-accent" },
     Shipped: { text: "Shipped", class: "badge badge-info" },
@@ -12,7 +14,6 @@ const Order = () => {
     Cancelled: { text: "Cancelled", class: "badge badge-error" },
   };
   const fetchOrders = async () => {
-    const token = window.localStorage.getItem("token");
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/orders/`,

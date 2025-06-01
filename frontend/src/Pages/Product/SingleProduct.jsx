@@ -15,7 +15,7 @@ const SingleProduct = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/products/product/${slug}`
       );
-      console.log(response);
+      // console.log(response);
       setProduct(response.data.product || {});
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to fetch Products.");

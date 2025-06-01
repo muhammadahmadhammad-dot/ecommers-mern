@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const login = async (data) => {
-    console.log(data);
+    // console.log(data);
   try {
     const response = await axios.post(
       `${import.meta.env.VITE_BACKEND_BASE_URL}/users/login`,

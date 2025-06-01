@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const Product = () => {
+  const token = useSelector((state)=>(state.auth.token))
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    const token = window.localStorage.getItem("token");
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/products/products`,
@@ -27,7 +28,6 @@ const Product = () => {
     fetchProducts();
   }, []);
   const deleteProducts = async (id) => {
-    const token = window.localStorage.getItem("token");
     try {
       const response = await axios.delete(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/products/delete/${id}`,

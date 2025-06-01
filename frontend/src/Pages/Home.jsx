@@ -4,15 +4,17 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ProductCard from "../Components/ProductCard.jsx";
+import Category from "../Components/Category.jsx";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/products/`
       );
-      console.log(response);
       setProducts(response.data.products || []);
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to fetch Products.");
@@ -21,12 +23,14 @@ const Home = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+  const handleCategory = (id) => {
+    setSelectedCategoryId(id);
+  };
   return (
     <>
       <Slider />
       <div className="mt-5">
         <div className="carousel rounded-box">
-          
           {/* {products &&
             products.map((product, idx) => (
               <div key={idx} className="carousel-item">
@@ -38,17 +42,29 @@ const Home = () => {
         </div>
       </div>
       <div className="mt-5">
+        <Category
+          handleCategory={handleCategory}
+          setSelectedCategoryId={setSelectedCategoryId}
+          selectedCategoryId={selectedCategoryId}
+        />
         <div className="grid grid-cols-3">
           {products &&
-            products.map((product, idx) => (
-              <ProductCard
-                key={idx}
-                featuredImage={product?.featureImage.source_url}
-                title={product.title}
-                short_description={product.short_description}
-                slug={product.slug}
-              />
-            ))}
+            products
+              .filter((product) =>
+                selectedCategoryId
+                  ? product.category === selectedCategoryId
+                  : true
+              )
+              .map((product, idx) => (
+                <ProductCard
+                  key={idx}
+                  id={product.category}
+                  featuredImage={product?.featureImage.source_url}
+                  title={product.title}
+                  short_description={product.short_description}
+                  slug={product.slug}
+                />
+              ))}
         </div>
       </div>
     </>

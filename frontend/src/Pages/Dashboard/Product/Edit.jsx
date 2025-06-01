@@ -8,10 +8,12 @@ import TextInput from "../../../Components/TextInput";
 import { mergeError } from "../../../helper/formHelper";
 import FileInput from "../../../Components/FileInput.jsx";
 import SelectInput from "../../../Components/SelectInput.jsx";
+import { useSelector } from "react-redux";
 
 const Edit = () => {
   const params = useParams();
   const { id } = params;
+  const token = useSelector((state)=>(state.auth.token))
 
   const navigate = useNavigate();
   const [categoryOptions, setCategoryOptions] = useState([]);
@@ -25,7 +27,6 @@ const Edit = () => {
   } = useForm();
   const categoryValue = watch("category") || "";
   const onSubmit = async (data) => {
-    const token = window.localStorage.getItem("token");
     const formData = new FormData();
     if (data.featureImage && data.featureImage.length > 0) {
       formData.append("featureImage", data.featureImage[0]);
@@ -59,7 +60,6 @@ const Edit = () => {
     }
   };
   const fetchCategories = async () => {
-    const token = window.localStorage.getItem("token");
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories`,
@@ -90,7 +90,6 @@ const Edit = () => {
 
   useEffect(() => {
     const fetchProduct = async (id) => {
-      const token = window.localStorage.getItem("token");
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_BASE_URL}/products/${id}`,

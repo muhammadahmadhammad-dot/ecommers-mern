@@ -1,6 +1,8 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { logout } from "../../feature/auth/authSlice.js";
 const Topbar = () => {
+  const dispatch=useDispatch();
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -35,17 +37,7 @@ const Topbar = () => {
             <li>
               <Link to={"/dashboard/order"}>Order</Link>
             </li>
-            <li>
-              <a>Parent </a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
+            
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">daisyUI</a>
@@ -61,26 +53,11 @@ const Topbar = () => {
            <li>
               <Link to={"/dashboard/order"}>Order</Link>
             </li>
-          <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
+          
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <button onClick={()=>dispatch(logout())} className="btn btn-neutral">Logout</button>
       </div>
     </div>
   );

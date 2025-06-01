@@ -2,19 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { useSelector } from "react-redux";
 const Category = () => {
+    const token = useSelector((state)=>(state.auth.token))
   const [categories, setCategories] = useState([]);
 
   const fetchCategories = async () => {
-    const token = window.localStorage.getItem('token')
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/categories`,{
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-        }
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/categories`
       );
       console.log(response)
       setCategories(response.data.categories || []);
@@ -25,7 +21,7 @@ const Category = () => {
     }
   };
   const deleteCategory = async (id) => {
-    const token = window.localStorage.getItem('token')
+  
     try {
       const response = await axios.delete(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/delete/${id}`,{
@@ -43,7 +39,7 @@ const Category = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [token]);
 
   return (
     <div className="card w-full mt-5 bg-base-100 card-xl shadow-sm">

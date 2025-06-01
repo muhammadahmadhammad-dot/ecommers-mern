@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { mergeError } from "../../../helper/formHelper.js";
+import { useSelector } from "react-redux";
 
 const Create = () => {
+  const token = useSelector((state)=>(state.auth.token))
   const navigate = useNavigate();
   const {
     register,
@@ -15,7 +17,6 @@ const Create = () => {
     setError, //use to set server side error
   } = useForm();
   const onSubmit = async (data) => {
-     const token = window.localStorage.getItem('token')
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/create`,

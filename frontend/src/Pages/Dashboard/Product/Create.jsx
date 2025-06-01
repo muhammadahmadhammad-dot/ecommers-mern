@@ -7,10 +7,12 @@ import { mergeError } from "../../../helper/formHelper.js";
 import FileInput from "../../../Components/FileInput.jsx";
 import SelectInput from "../../../Components/SelectInput.jsx";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Create = () => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const navigate = useNavigate();
+  const token = useSelector((state)=>(state.auth.token))
   const {
     register,
     handleSubmit,
@@ -19,7 +21,6 @@ const Create = () => {
     watch,
   } = useForm();
   const fetchCategories = async () => {
-    const token = window.localStorage.getItem("token");
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories`,
@@ -50,7 +51,6 @@ const Create = () => {
   const onSubmit = async (data) => {
     
 
-    const token = window.localStorage.getItem("token");
     const formData = new FormData();
     if (data.featureImage && data.featureImage.length > 0) {
       formData.append("featureImage", data.featureImage[0]);

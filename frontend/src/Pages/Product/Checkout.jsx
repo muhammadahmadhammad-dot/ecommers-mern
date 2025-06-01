@@ -79,7 +79,7 @@ const Checkout = () => {
         }
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       if (err.response.data.validateErrors) {
         mergeError(err.response.data?.validateErrors, setError);
       }

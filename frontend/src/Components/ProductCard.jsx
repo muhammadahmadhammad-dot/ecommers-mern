@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ featuredImage, title, short_description,slug }) => {
+const ProductCard = ({ featuredImage, title, short_description,slug,id }) => {
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
+    <div className="card bg-base-100 w-96 shadow-sm" id={id}>
         <figure>
       <Link to={`/shop/product-detail/${slug}`}>
           <img src={featuredImage} alt={title} />

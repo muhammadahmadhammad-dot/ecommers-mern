@@ -6,11 +6,13 @@ import { toast } from "react-toastify";
 import SelectInput from "../../../Components/SelectInput.jsx";
 import { useForm } from "react-hook-form";
 import { mergeError } from "../../../helper/formHelper.js";
+import { useSelector } from "react-redux";
 
 const Show = () => {
   const params = useParams();
   const { id } = params;
   const [order, setOrder] = useState({});
+  const token = useSelector((state)=>(state.auth.token))
   const navigate = useNavigate();
   const statusBadge = {
     Delivered: { text: "Delivered", class: "badge badge-accent" },
@@ -46,7 +48,6 @@ const Show = () => {
     watch, //  selected value if needed
   } = useForm();
   const onSubmit = async (data) => {
-    const token = window.localStorage.getItem("token");
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/orders/update-status/${id}`,
@@ -71,7 +72,6 @@ const Show = () => {
 
   useEffect(() => {
     const fetchOrder = async () => {
-      const token = window.localStorage.getItem("token");
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_BASE_URL}/orders/${id}`,
