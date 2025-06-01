@@ -14,7 +14,7 @@ app.use(cors({
 }));
 app.use(express.json()); //req.body
 
-connection(process.env.DB_URL);
+await connection(process.env.DB_URL);
 
 app.get('/',(red, res)=>{
     res.send("ok")
