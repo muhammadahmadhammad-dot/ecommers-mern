@@ -22,8 +22,8 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      window.localStorage.setItem("user",JSON.stringify(''))
-      window.localStorage.getItem("token",JSON.stringify(''))
+      window.localStorage.removeItem("user")
+      window.localStorage.removeItem("token")
         state.auth.user='';
         state.auth.token='';
     },
