@@ -1,20 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ProductShopButtons from "./ProductShopButtons";
 
-const ProductCard = ({ featuredImage, title, short_description,slug,id }) => {
+const ProductCard = ({ product, id }) => {
   return (
     <div className="card bg-base-100 w-96 shadow-sm" id={id}>
         <figure>
-      <Link to={`/shop/product-detail/${slug}`}>
-          <img src={featuredImage} alt={title} />
+      <Link to={`/shop/product-detail/${product.slug}`} className="h-60">
+          <img src={product.featuredImage} alt={product.title} />
       </Link>
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{title}</h2>
-          <p>{short_description}</p>
+          <Link to={`/shop/product-detail/${product.slug}`} >
+          <h2 className="card-title">{product.title}</h2>
+          <p>{product.short_description}</p>
+          </Link>
           <div className="card-actions justify-between">
-            <Link to={`/shop/product-detail/${slug}`} className="btn btn-success">View Detail</Link>
-            <button className="btn btn-primary">Buy Now</button>
+            <ProductShopButtons  product={product}/>
           </div>
         </div>
     </div>

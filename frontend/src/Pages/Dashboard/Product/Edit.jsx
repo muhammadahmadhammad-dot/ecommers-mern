@@ -14,7 +14,7 @@ const Edit = () => {
   const params = useParams();
   const { id } = params;
   const token = useSelector((state)=>(state.auth.token))
-
+ const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
   const [categoryOptions, setCategoryOptions] = useState([]);
   const {
@@ -27,6 +27,7 @@ const Edit = () => {
   } = useForm();
   const categoryValue = watch("category") || "";
   const onSubmit = async (data) => {
+    setLoading(true)
     const formData = new FormData();
     if (data.featureImage && data.featureImage.length > 0) {
       formData.append("featureImage", data.featureImage[0]);
@@ -50,9 +51,10 @@ const Edit = () => {
         }
       );
       toast.success(response.data?.message || "Product updated successfully");
-
+      setLoading(false)
       navigate("/dashboard/product");
     } catch (error) {
+      setLoading(false)
       if (error.response.data.validateErrors) {
         mergeError(error.response.data?.validateErrors, setError);
       }
@@ -221,8 +223,8 @@ const Edit = () => {
               )}
             </div>
             <div className="mb-3">
-              <button className="btn btn-primary " type="submit">
-                Save Changes
+              <button disabled={loading} className="btn btn-primary " type="submit">
+                 {loading ? <span className="loading loading-spinner loading-lg"></span> : 'Save Changes'}
               </button>
             </div>
           </form>

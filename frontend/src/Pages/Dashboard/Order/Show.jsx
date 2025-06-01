@@ -12,6 +12,7 @@ const Show = () => {
   const params = useParams();
   const { id } = params;
   const [order, setOrder] = useState({});
+  const [loading, setLoading] = useState(false);
   const token = useSelector((state)=>(state.auth.token))
   const navigate = useNavigate();
   const statusBadge = {
@@ -73,6 +74,7 @@ const Show = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
+        setLoading(true)
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_BASE_URL}/orders/${id}`,
           {
@@ -81,9 +83,11 @@ const Show = () => {
             },
           }
         );
+        setLoading(false)
         setOrder(response.data.order || {});
         setValue("status", response.data?.order?.status);
       } catch (error) {
+        setLoading(false)
         toast.error(error.response?.data?.message || "Failed to fetch Order.");
       }
     };
@@ -104,7 +108,10 @@ const Show = () => {
           </div>
         </div>
         <div className="card w-full mt-5 ">
-          <table className="table ">
+          {
+            loading ? <span className="loading loading-dots loading-lg"></span> : 
+            <>
+             <table className="table ">
             <tbody>
               <tr>
                 <th className="w-36">Name</th>
@@ -209,6 +216,9 @@ const Show = () => {
               </tbody>
             </table>
           </div>
+            </>
+          }
+         
         </div>
       </div>
     </div>

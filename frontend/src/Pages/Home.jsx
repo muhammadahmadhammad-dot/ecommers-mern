@@ -59,10 +59,7 @@ const Home = () => {
                 <ProductCard
                   key={idx}
                   id={product.category}
-                  featuredImage={product?.featureImage.source_url}
-                  title={product.title}
-                  short_description={product.short_description}
-                  slug={product.slug}
+                  product={product}
                 />
               ))}
         </div>

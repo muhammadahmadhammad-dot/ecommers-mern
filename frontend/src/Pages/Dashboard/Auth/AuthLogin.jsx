@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextInput from "../../../Components/TextInput";
 import { useForm } from "react-hook-form";
 import { mergeError } from "../../../helper/formHelper.js";
@@ -9,6 +9,7 @@ import { login } from "../../../feature/auth/authSlice.js";
 
 const AuthLogin = () => {
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -19,8 +20,9 @@ const AuthLogin = () => {
   const dispatch = useDispatch();
   const onSubmit = async (data) => {
     try {
+      setLoading(true)
       const response = await dispatch(login(data)).unwrap();
-
+      setLoading(false)
       if (response.success) {
         toast.success(response?.message || "Login Successfull.");
         // if (response?.user?.role) {
@@ -75,8 +77,8 @@ const AuthLogin = () => {
               )}
             </div>
             <div className="mb-3">
-              <button className="btn btn-primary w-full" type="submit">
-                Login
+              <button disabled={loading} className={`btn btn-${loading ? 'neutral btn-soft' : 'primary'} w-full`} type="submit">
+                 {loading ? <span className="loading loading-spinner loading-lg"></span> : 'Login'}
               </button>
             </div>
           </form>

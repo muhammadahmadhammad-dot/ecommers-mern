@@ -1,5 +1,5 @@
 import axios from "axios";
-import  { useEffect  } from "react";
+import  { useEffect, useState  } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 const Edit = () => {
   const params = useParams();
   const { id } = params;
+  const [loading, setLoading] = useState(false);
   const token = useSelector((state)=>(state.auth.token))
 
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Edit = () => {
 
   const onSubmit = async (data) => {
     try {
+       setLoading(true)
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/update/${id}`,
         data, {
@@ -34,9 +36,10 @@ const Edit = () => {
         }
       );
       toast.success(response.data?.message || "Category updated successfully");
-
+      setLoading(false)
       navigate("/dashboard/category");
     } catch (error) {
+       setLoading(false)
       if (error.response.data.validateErrors) {
         mergeError(error.response.data?.validateErrors, setError);
       }
@@ -98,8 +101,10 @@ const Edit = () => {
               <button
                 className="btn btn-primary"
                 type="submit"
+                disabled={loading}
               >
-                Update
+                {loading ? <span className="loading loading-spinner loading-lg"></span> : 'Update'}
+                
               </button>
             </div>
           </form>

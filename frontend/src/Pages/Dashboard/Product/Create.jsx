@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 const Create = () => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const token = useSelector((state)=>(state.auth.token))
   const {
     register,
@@ -49,7 +50,7 @@ const Create = () => {
     },
   ];
   const onSubmit = async (data) => {
-    
+    setLoading(true)
 
     const formData = new FormData();
     if (data.featureImage && data.featureImage.length > 0) {
@@ -74,8 +75,10 @@ const Create = () => {
         }
       );
       toast.success(response.data?.message);
+      setLoading(false)
       navigate("/dashboard/product");
     } catch (error) {
+      setLoading(false)
       if (error.response.data.validateErrors) {
         mergeError(error.response.data?.validateErrors, setError);
       }
@@ -193,8 +196,8 @@ const Create = () => {
               )}
             </div>
             <div className="mb-3">
-              <button className="btn btn-primary " type="submit">
-                Create
+              <button disabled={loading} className="btn btn-primary " type="submit">
+                 {loading ? <span className="loading loading-spinner loading-lg"></span> : 'Create'}
               </button>
             </div>
           </form>

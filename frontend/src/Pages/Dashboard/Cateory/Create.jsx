@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../../../Components/TextInput";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 const Create = () => {
   const token = useSelector((state)=>(state.auth.token))
   const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -18,6 +19,7 @@ const Create = () => {
   } = useForm();
   const onSubmit = async (data) => {
     try {
+      setLoading(true)
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/create`,
         data,
@@ -29,8 +31,10 @@ const Create = () => {
         }
       );
       toast.success(response.data?.message);
+      setLoading(false)
       navigate('/dashboard/category')
     } catch (error) {
+       setLoading(false)
       if (error.response.data.validateErrors) {
         mergeError(error.response.data?.validateErrors, setError);
       }
@@ -67,8 +71,8 @@ const Create = () => {
               )}
             </div>
             <div className="mb-3">
-              <button className="btn btn-primary " type="submit">
-                Create
+              <button disabled={loading}  className="btn btn-primary " type="submit">
+                 {loading ? <span className="loading loading-spinner loading-lg"></span> : 'Create'}
               </button>
             </div>
           </form>

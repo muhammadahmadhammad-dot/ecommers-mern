@@ -5,16 +5,23 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 const Category = () => {
     const token = useSelector((state)=>(state.auth.token))
+     const [loading, setLoading] = useState(false);
+      const [deleteLoading, setDeleteLoading] = useState({
+        id: "",
+        status: false,
+      });
   const [categories, setCategories] = useState([]);
 
   const fetchCategories = async () => {
     try {
+      setLoading(true)
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories`
       );
-      console.log(response)
+      setLoading(false)
       setCategories(response.data.categories || []);
     } catch (error) {
+      setLoading(false)
       toast.error(
         error.response?.data?.message || "Failed to fetch Categories."
       );
@@ -23,6 +30,10 @@ const Category = () => {
   const deleteCategory = async (id) => {
   
     try {
+      setDeleteLoading({
+        id: id,
+        status: true,
+      });
       const response = await axios.delete(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/categories/delete/${id}`,{
           headers:{
@@ -30,9 +41,17 @@ const Category = () => {
           }
         }
       );
+      setDeleteLoading({
+        id: '',
+        status: false,
+      });
       setCategories((prev) => prev.filter((item) => item._id !== id));
       toast.success(response.data?.message || "Category deleted Successfully.");
     } catch (error) {
+       setDeleteLoading({
+        id: '',
+        status: false,
+      });
       toast.error(error.response.data?.message || "Failed to delete Category.");
     }
   };
@@ -55,7 +74,10 @@ const Category = () => {
           </div>
         </div>
         <div>
-          <div className="overflow-x-auto">
+           {loading ? (
+            <span className="loading loading-dots loading-lg"></span>
+          ) : (
+            <div className="overflow-x-auto">
             <table className="table">
               {/* head */}
               <thead>
@@ -75,13 +97,19 @@ const Category = () => {
                       <td>{category.createdAt}</td>
                       <td>
                         <Link to={`/dashboard/category/edit/${category._id}`} className="btn btn-secondary">Edit</Link>
-                        <button onClick={()=>deleteCategory(category._id)} className="btn btn-danger">Delete</button>
+                        <button
+                        disabled={deleteLoading.id == category._id && deleteLoading.status == true}
+                         onClick={()=>deleteCategory(category._id)} className="btn btn-danger">
+                          {deleteLoading.id == category._id && deleteLoading.status == true ? <span className="loading loading-spinner loading-lg"></span> : 'Delete'}
+                         </button>
                       </td>
                     </tr>
                   ))}
               </tbody>
             </table>
           </div>
+          )}
+          
         </div>
       </div>
     </div>

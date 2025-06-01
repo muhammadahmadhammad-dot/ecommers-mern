@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
   const token = useSelector((state)=>(state.auth.token))
   const statusBadge = {
     Delivered: { text: "Delivered", class: "badge badge-accent" },
@@ -15,6 +16,7 @@ const Order = () => {
   };
   const fetchOrders = async () => {
     try {
+      setLoading(true)
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/orders/`,
         {
@@ -23,8 +25,10 @@ const Order = () => {
           },
         }
       );
+      setLoading(false)
       setOrders(response.data.orders || []);
     } catch (error) {
+      setLoading(false)
       toast.error(error.response?.data?.message || "Failed to fetch Order.");
     }
   };
@@ -45,7 +49,8 @@ const Order = () => {
           </div>
         </div>
         <div>
-          <div className="overflow-x-auto">
+          {
+            loading ? <span className="loading loading-dots loading-lg"></span> :  <div className="overflow-x-auto">
             <table className="table">
               {/* head */}
               <thead>
@@ -82,13 +87,15 @@ const Order = () => {
                         >
                           Detail
                         </Link>
-                        <button className="btn btn-error">Delete</button>
+                        {/* <button className="btn btn-error">Delete</button> */}
                       </td>
                     </tr>
                   ))}
               </tbody>
             </table>
           </div>
+          }
+         
         </div>
       </div>
     </div>
