@@ -24,8 +24,8 @@ export const authSlice = createSlice({
     logout: (state) => {
       window.localStorage.removeItem("user");
       window.localStorage.removeItem("token");
-      state.auth.user='';
-      state.auth.token='';
+      state.user='';
+      state.token='';
     },
   },
   extraReducers:(builder) => {
