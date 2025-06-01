@@ -1,8 +1,13 @@
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../feature/auth/authSlice.js";
 const Topbar = () => {
   const dispatch=useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate('/')
+  }
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -57,7 +62,7 @@ const Topbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <button onClick={()=>dispatch(logout())} className="btn btn-neutral">Logout</button>
+        <button onClick={handleLogout} className="btn btn-neutral">Logout</button>
       </div>
     </div>
   );
