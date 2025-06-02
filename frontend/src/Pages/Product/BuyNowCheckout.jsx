@@ -109,7 +109,8 @@ const BuyNowCheckout = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-6 w-11/12 mx-auto">
+      <div className="w-11/12 mx-auto">
+      <div className="grid md:grid-cols-2 gap-6  sm:grid-cols-1 ">
         <div>
           {/* <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
@@ -203,6 +204,7 @@ const BuyNowCheckout = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

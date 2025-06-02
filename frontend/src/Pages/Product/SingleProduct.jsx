@@ -27,7 +27,7 @@ const SingleProduct = () => {
 
   return (
     <div className="card bg-base-100 w-full mt-5 ">
-      <div className="grid gap-6 grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 sm:grid-cols-1">
         <div>
           <figure className="px-10 pt-10">
             <img

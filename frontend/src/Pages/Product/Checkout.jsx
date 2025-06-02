@@ -106,101 +106,103 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-6 w-11/12 mx-auto">
-        <div>
-          {/* <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-3">
-              <TextInput
-                label="Name"
-                type="text"
-                placeholder="Please Enter Name"
-                handelField={register("name", {
-                  required: "Name is required",
-                })}
-              />
-              {errors.name && (
-                <p className="text-error">{errors.name.message}</p>
-              )}
-            </div>
-            <div className="mb-3">
-              <TextInput
-                label="Phone"
-                type="text"
-                placeholder="Please Enter Phone"
-                handelField={register("phone", {
-                  required: "Phone is required",
-                })}
-              />
-              {errors.phone && (
-                <p className="text-error">{errors.phone.message}</p>
-              )}
-            </div>
-            <div className="mb-3">
-              <TextInput
-                label="Email"
-                type="email"
-                placeholder="Please Enter Email"
-                handelField={register("email", {
-                  required: "Email is required",
-                })}
-              />
-              {errors.email && (
-                <p className="text-error">{errors.email.message}</p>
-              )}
-            </div>
-            <div className="mb-3">
-              <TextInput
-                label="Address"
-                type="text"
-                placeholder="Please Enter Address"
-                handelField={register("address", {
-                  required: "Address is required",
-                })}
-              />
-              {errors.address && (
-                <p className="text-error">{errors.address.message}</p>
-              )}
-            </div>
-            <div className="mb-3">
-              <button
-                className="btn btn-neutral"
-                disabled={loading}
-                type="submit"
-              >
-                {loading ? "Processing..." : "Place Order"}
-              </button>
-            </div>
-          </form> */}
-          <CheckoutForm
-            CardElement={<CardElement />}
-            totalAmount={totalAmount}
-            handleSubmit={handleSubmit}
-            loading={loading}
-            onSubmit={onSubmit}
-            errors={errors}
-            register={register}
-          />
-        </div>
-        <div className="card-body">
-          <h2 className="card-title">
-            Order Summary
-            <span className="text-end">{totalAmount}</span>
-          </h2>
-          {cartItems.map((item, idx) => (
-            <div key={idx} className="flex gap-6">
-              <div className="h-20 w-20">
-                <img
-                  className="w-full h-full"
-                  src={item?.featureImage?.source_url}
-                  alt=""
+      <div className="w-11/12 mx-auto">
+        <div className="grid md:grid-cols-2 gap-6  sm:grid-cols-1">
+          <div>
+            {/* <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-3">
+                <TextInput
+                  label="Name"
+                  type="text"
+                  placeholder="Please Enter Name"
+                  handelField={register("name", {
+                    required: "Name is required",
+                  })}
                 />
+                {errors.name && (
+                  <p className="text-error">{errors.name.message}</p>
+                )}
               </div>
-              <div>
-                <h2 className="card-title ">{item.title}</h2>
-                <p>{item.price}</p>
+              <div className="mb-3">
+                <TextInput
+                  label="Phone"
+                  type="text"
+                  placeholder="Please Enter Phone"
+                  handelField={register("phone", {
+                    required: "Phone is required",
+                  })}
+                />
+                {errors.phone && (
+                  <p className="text-error">{errors.phone.message}</p>
+                )}
               </div>
-            </div>
-          ))}
+              <div className="mb-3">
+                <TextInput
+                  label="Email"
+                  type="email"
+                  placeholder="Please Enter Email"
+                  handelField={register("email", {
+                    required: "Email is required",
+                  })}
+                />
+                {errors.email && (
+                  <p className="text-error">{errors.email.message}</p>
+                )}
+              </div>
+              <div className="mb-3">
+                <TextInput
+                  label="Address"
+                  type="text"
+                  placeholder="Please Enter Address"
+                  handelField={register("address", {
+                    required: "Address is required",
+                  })}
+                />
+                {errors.address && (
+                  <p className="text-error">{errors.address.message}</p>
+                )}
+              </div>
+              <div className="mb-3">
+                <button
+                  className="btn btn-neutral"
+                  disabled={loading}
+                  type="submit"
+                >
+                  {loading ? "Processing..." : "Place Order"}
+                </button>
+              </div>
+            </form> */}
+            <CheckoutForm
+              CardElement={<CardElement />}
+              totalAmount={totalAmount}
+              handleSubmit={handleSubmit}
+              loading={loading}
+              onSubmit={onSubmit}
+              errors={errors}
+              register={register}
+            />
+          </div>
+          <div className="card-body">
+            <h2 className="card-title">
+              Order Summary
+              <span className="text-end">{totalAmount}</span>
+            </h2>
+            {cartItems.map((item, idx) => (
+              <div key={idx} className="flex gap-6">
+                <div className="h-20 w-20">
+                  <img
+                    className="w-full h-full"
+                    src={item?.featureImage?.source_url}
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <h2 className="card-title ">{item.title}</h2>
+                  <p>{item.price}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
