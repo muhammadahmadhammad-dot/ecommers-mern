@@ -47,7 +47,7 @@ const Home = () => {
           setSelectedCategoryId={setSelectedCategoryId}
           selectedCategoryId={selectedCategoryId}
         />
-        <div className="grid gap-3 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+        <div className="grid gap-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
           {products &&
             products
               .filter((product) =>

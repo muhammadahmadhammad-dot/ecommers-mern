@@ -24,7 +24,7 @@ const Category = ({
     fetchCategories();
   }, []);
   return (
-    <div className="grid grid-cols-8 w-11/12 mx-auto md:grid-cols-4 sm:grid-cols-2 place-content-center">
+    <div className="grid lg:grid-cols-8 w-11/12 mx-auto md:grid-cols-4 sm:grid-cols-2 place-content-center">
       <button
         onClick={() => setSelectedCategoryId(null)}
         className={`btn btn-${
