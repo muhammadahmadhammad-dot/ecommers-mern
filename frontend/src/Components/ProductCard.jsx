@@ -4,7 +4,7 @@ import ProductShopButtons from "./ProductShopButtons";
 
 const ProductCard = ({ product, id }) => {
   return (
-    <div className="card bg-base-100 w-96 shadow-sm" id={id}>
+    <div className="card bg-base-100 w-full shadow-sm" id={id}>
         <figure>
       <Link to={`/shop/product-detail/${product.slug}`} className="h-60">
           <img src={product?.featureImage.source_url} alt={product.title} />

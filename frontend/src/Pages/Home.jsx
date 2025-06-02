@@ -47,21 +47,23 @@ const Home = () => {
           setSelectedCategoryId={setSelectedCategoryId}
           selectedCategoryId={selectedCategoryId}
         />
-        <div className="grid mt-5 gap-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-          {products &&
-            products
-              .filter((product) =>
-                selectedCategoryId
-                  ? product.category === selectedCategoryId
-                  : true
-              )
-              .map((product, idx) => (
-                <ProductCard
-                  key={idx}
-                  id={product.category}
-                  product={product}
-                />
-              ))}
+        <div className="w-11/12 mx-auto">
+          <div className="grid mt-5 gap-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+            {products &&
+              products
+                .filter((product) =>
+                  selectedCategoryId
+                    ? product.category === selectedCategoryId
+                    : true
+                )
+                .map((product, idx) => (
+                  <ProductCard
+                    key={idx}
+                    id={product.category}
+                    product={product}
+                  />
+                ))}
+          </div>
         </div>
       </div>
     </>
