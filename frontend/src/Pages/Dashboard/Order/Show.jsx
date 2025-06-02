@@ -13,6 +13,7 @@ const Show = () => {
   const { id } = params;
   const [order, setOrder] = useState({});
   const [loading, setLoading] = useState(false);
+  const [pageTitle, setPageTitle] = useState('');
   const token = useSelector((state)=>(state.auth.token))
   const navigate = useNavigate();
   const statusBadge = {
@@ -84,6 +85,7 @@ const Show = () => {
           }
         );
         setLoading(false)
+        setPageTitle(response.data.order?.shippingInfo?.name || '')
         setOrder(response.data.order || {});
         setValue("status", response.data?.order?.status);
       } catch (error) {
@@ -94,6 +96,9 @@ const Show = () => {
 
     fetchOrder(id);
   }, [id, setOrder, setValue]);
+  useEffect(() => {
+              document.title = `Order - ${pageTitle} - Dashboard| ${import.meta.env.VITE_APP_NAME}`;
+    }, [pageTitle]);
   return (
     <div className="card w-full mt-5 bg-base-100 card-xl shadow-sm">
       <div className="card-body">

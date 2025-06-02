@@ -21,6 +21,9 @@ const Home = () => {
     }
   };
   useEffect(() => {
+    document.title = `Home | ${import.meta.env.VITE_APP_NAME}`;
+  }, []);
+  useEffect(() => {
     fetchProducts();
   }, []);
   const handleCategory = (id) => {

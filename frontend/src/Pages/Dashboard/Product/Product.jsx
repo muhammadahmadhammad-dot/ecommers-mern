@@ -33,6 +33,9 @@ const Product = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+  useEffect(() => {
+                  document.title = `Product - Dashboard| ${import.meta.env.VITE_APP_NAME}`;
+    }, []);
   const deleteProducts = async (id) => {
     try {
       setDeleteLoading({

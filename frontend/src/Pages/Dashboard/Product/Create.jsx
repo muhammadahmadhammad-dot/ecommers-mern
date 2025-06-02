@@ -89,6 +89,9 @@ const Create = () => {
   useEffect(() => {
     fetchCategories();
   }, []);
+  useEffect(() => {
+                  document.title = `Create New Product - Dashboard| ${import.meta.env.VITE_APP_NAME}`;
+    }, []);
   return (
     <div className="card w-full mt-5 bg-base-100 card-xl shadow-sm">
       <div className="card-body">

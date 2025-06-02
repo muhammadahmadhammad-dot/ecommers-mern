@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 const Edit = () => {
   const params = useParams();
   const { id } = params;
+  const [pageTitle, setPageTitle] = useState('');
   const token = useSelector((state)=>(state.auth.token))
  const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
@@ -107,7 +108,7 @@ const Edit = () => {
           ...response.data.product,
           status: response.data.product.status?.toString(), // convert Boolean → String
         };
-
+        setPageTitle(response?.data?.product?.title)
         reset(productData);
         }
       } catch (error) {
@@ -118,6 +119,9 @@ const Edit = () => {
     fetchProduct(id);
     fetchCategories();
   }, [id, reset]);
+  useEffect(() => {
+                document.title = `Order - ${pageTitle} - Dashboard| ${import.meta.env.VITE_APP_NAME}`;
+      }, [pageTitle]);
   return (
     <div className="card w-full mt-5 bg-base-100 card-xl shadow-sm">
       <div className="card-body">

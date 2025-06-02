@@ -6,11 +6,14 @@ import {
   decreaseQuantity,
   removeFromCart,
 } from "../../feature/cart/cartSlice";
+import { useEffect } from "react";
 
 const Cart = () => {
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+        document.title = `Your Cart | ${import.meta.env.VITE_APP_NAME}`;
+  }, []);
   return (
     <div className="card bg-base-100 w-full ">
       <div className="card-body">

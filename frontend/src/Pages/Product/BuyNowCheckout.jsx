@@ -91,7 +91,9 @@ const BuyNowCheckout = () => {
       dispatch(clearBuyNow());
     };
   }, [dispatch]);
-
+ useEffect(() => {
+        document.title = `Place Order | ${import.meta.env.VITE_APP_NAME}`;
+  }, []);
   if (!buyNowItem) {
     navigate("/");
   }

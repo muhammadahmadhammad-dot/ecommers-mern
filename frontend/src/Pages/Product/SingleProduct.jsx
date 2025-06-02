@@ -8,6 +8,7 @@ const SingleProduct = () => {
   const params = useParams();
   const { slug } = params;
   const [product, setProduct] = useState({});
+  const [pageTitle, setPageTitle] = useState('');
 
 
   const fetchProduct = async (slug) => {
@@ -16,6 +17,7 @@ const SingleProduct = () => {
         `${import.meta.env.VITE_BACKEND_BASE_URL}/products/product/${slug}`
       );
       // console.log(response);
+      setPageTitle(response.data?.product?.title || '')
       setProduct(response.data.product || {});
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to fetch Products.");
@@ -24,6 +26,9 @@ const SingleProduct = () => {
   useEffect(() => {
     fetchProduct(slug);
   }, [slug, setProduct]);
+   useEffect(() => {
+      document.title = `Product - ${pageTitle} | ${import.meta.env.VITE_APP_NAME}`;
+    }, [pageTitle]);
 
   return (
     <div className="card bg-base-100 w-full mt-5 ">

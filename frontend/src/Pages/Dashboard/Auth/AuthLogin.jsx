@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextInput from "../../../Components/TextInput";
 import { useForm } from "react-hook-form";
 import { mergeError } from "../../../helper/formHelper.js";
@@ -40,7 +40,9 @@ const AuthLogin = () => {
       toast.error(error?.message || "Login Failed! Please try again.");
     }
   };
-
+   useEffect(() => {
+          document.title = `Login - Dashboard| ${import.meta.env.VITE_APP_NAME}`;
+    }, []);
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="card bg-base-100 w-96 p-4 shadow-sm">

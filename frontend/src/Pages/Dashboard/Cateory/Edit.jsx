@@ -12,6 +12,7 @@ const Edit = () => {
   const params = useParams();
   const { id } = params;
   const [loading, setLoading] = useState(false);
+  const [pageTitle, setPageTitle] = useState('');
   const token = useSelector((state)=>(state.auth.token))
 
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ const Edit = () => {
         }
         );
         const name = response.data.category.name;
+        setPageTitle(name)
         setValue("name", name);
       } catch (error) {
         toast.error(
@@ -69,6 +71,9 @@ const Edit = () => {
     fetchCategory(id);
   }, [id, setValue]);
 
+   useEffect(() => {
+              document.title = `Category - ${pageTitle} - Dashboard| ${import.meta.env.VITE_APP_NAME}`;
+    }, [pageTitle]);
   return (
     <div className="card w-full mt-5 bg-base-100 card-xl shadow-sm">
       <div className="card-body">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../../feature/cart/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
@@ -92,6 +92,9 @@ const Checkout = () => {
   if (!cartItems) {
     navigate("/");
   }
+  useEffect(() => {
+        document.title = `Place Order | ${import.meta.env.VITE_APP_NAME}`;
+  }, []);
   return (
     <div className="card bg-base-100 w-full ">
       <div className="card-body">

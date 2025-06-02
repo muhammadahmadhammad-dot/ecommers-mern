@@ -35,6 +35,9 @@ const Order = () => {
   useEffect(() => {
     fetchOrders();
   }, []);
+  useEffect(() => {
+                document.title = `Order - Dashboard| ${import.meta.env.VITE_APP_NAME}`;
+  }, []);
   return (
     <div className="card w-full mt-5 bg-base-100 card-xl shadow-sm">
       <div className="card-body">

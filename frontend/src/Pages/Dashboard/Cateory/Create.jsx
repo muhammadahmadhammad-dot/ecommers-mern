@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../../../Components/TextInput";
 import { useForm } from "react-hook-form";
@@ -41,7 +41,9 @@ const Create = () => {
       toast.error(error.response.data?.message|| 'Category Creation Failed.');
     }
   };
-
+   useEffect(() => {
+              document.title = `Create New Category - Dashboard| ${import.meta.env.VITE_APP_NAME}`;
+    }, []);
   return (
     <div className="card w-full mt-5 bg-base-100 card-xl shadow-sm">
       <div className="card-body">
