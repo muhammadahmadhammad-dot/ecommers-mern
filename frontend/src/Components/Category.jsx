@@ -25,7 +25,7 @@ const Category = ({
   }, []);
   return (
     <div className="w-11/12 mx-auto">
-      <div className="grid gap-4 justify-items-center lg:grid-cols-8  md:grid-cols-4 sm:grid-cols-2">
+      <div className="grid gap-4 place-content-center lg:grid-cols-8  md:grid-cols-4 sm:grid-cols-2">
         <button
           onClick={() => setSelectedCategoryId(null)}
           className={`btn btn-${
