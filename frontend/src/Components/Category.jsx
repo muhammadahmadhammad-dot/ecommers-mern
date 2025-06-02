@@ -24,28 +24,30 @@ const Category = ({
     fetchCategories();
   }, []);
   return (
-    <div className="grid lg:grid-cols-8 w-11/12 mx-auto md:grid-cols-4 sm:grid-cols-2 place-content-center">
-      <button
-        onClick={() => setSelectedCategoryId(null)}
-        className={`btn btn-${
-          setSelectedCategoryId === null ? "active" : "outline"
-        } btn-primary`}
-      >
-        All
-      </button>
-      {categories &&
-        categories.map((category) => (
-          <button
-            key={category._id}
-            onClick={() => handleCategory(category._id)}
-            className={`btn btn-${
-              selectedCategoryId === category._id ? "active" : "outline"
-            } btn-primary`}
-            id={category._id}
-          >
-            {category.name}
-          </button>
-        ))}
+    <div className="w-11/12 mx-auto">
+      <div className="grid gap-4 place-content-center lg:grid-cols-8  md:grid-cols-4 sm:grid-cols-2">
+        <button
+          onClick={() => setSelectedCategoryId(null)}
+          className={`btn btn-${
+            setSelectedCategoryId === null ? "active" : "outline"
+          } btn-primary`}
+        >
+          All
+        </button>
+        {categories &&
+          categories.map((category) => (
+            <button
+              key={category._id}
+              onClick={() => handleCategory(category._id)}
+              className={`btn btn-${
+                selectedCategoryId === category._id ? "active" : "outline"
+              } btn-primary`}
+              id={category._id}
+            >
+              {category.name}
+            </button>
+          ))}
+      </div>
     </div>
   );
 };
